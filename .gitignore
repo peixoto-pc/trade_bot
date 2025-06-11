@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# VSCode
+.vscode/
+
+# Ambientes virtuais
+.env
+.venv/
+venv/
+ENV/
+
+# Jupyter
+.ipynb_checkpoints
+
+# Arquivos temporários
+*.log
+*.tmp
+*.bak
+*.swp
+
+# Dados e resultados
+*.png
+*.csv
+*.xlsx
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Poetry
+poetry.lock
+
+# Outros
+*.sqlite3
+*.db
