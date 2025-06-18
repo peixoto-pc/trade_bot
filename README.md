@@ -1,40 +1,64 @@
 # trade_bot
 
-O **trade_bot** é um robô de análise técnica para ações da bolsa brasileira, desenvolvido em Python. Ele automatiza o monitoramento de ativos, gera recomendações de compra, venda ou manutenção e salva gráficos de análise técnica, tudo de forma agendada e contínua.
+O **trade_bot** é um robô de análise técnica para ações da bolsa brasileira, desenvolvido em Python. Ele automatiza o monitoramento de ativos, gera recomendações de compra, venda ou manutenção e disponibiliza uma interface web moderna para acompanhamento em tempo real.
 
-## Como funciona
+## Funcionalidades
 
-1. **Coleta de Dados**
-   - O bot utiliza a biblioteca `yfinance` para baixar dados históricos de preços e volumes das ações configuradas.
-   - O período padrão é de 2 anos, garantindo uma base robusta para análise.
+1. **Dashboard Web em Tempo Real**
+   - Interface web moderna e responsiva
+   - Atualização automática a cada 5 minutos
+   - Contador regressivo para próxima atualização
+   - Status do mercado (aberto/fechado)
+   - Cards interativos para cada ativo
 
-2. **Processamento e Indicadores Técnicos**
-   - Calcula indicadores clássicos como:
-     - Médias móveis (curta e longa)
-     - RSI (Índice de Força Relativa)
-     - MACD
-     - Bandas de Bollinger
-     - ADX (Average Directional Index)
-     - Volume relativo e média de volume
+2. **Análise Técnica Automatizada**
+   - Coleta automática de dados via `yfinance`
+   - Indicadores técnicos (RSI, ADX, Volume)
+   - Recomendações baseadas em múltiplos indicadores
+   - Validação de sinais em tempo real
 
-3. **Geração de Sinais**
-   - A função de estratégia avalia os indicadores e gera sinais:
-     - **1**: Compra
-     - **-1**: Venda
-     - **0**: Manter/Neutro
-   - Os sinais são baseados em múltiplas confirmações, como tendência (médias móveis + ADX), volume acima da média, RSI em regiões de sobrevenda/sobrecompra e preço nas bandas de Bollinger.
+3. **Monitoramento do Mercado**
+   - Horário do pregão (10:00-17:55)
+   - Identificação de dias úteis
+   - Status em tempo real do mercado
+   - Alertas visuais de mercado fechado
 
-4. **Validação dos Sinais**
-   - Antes de recomendar uma operação, o bot valida se os critérios de força de tendência, volume e RSI estão de acordo com os parâmetros definidos.
+4. **Visualização de Dados**
+   - Cards interativos por ação
+   - Modal com detalhes técnicos
+   - Indicadores visuais de recomendação
+   - Histórico de preços e análises
 
-5. **Recomendações e Visualização**
-   - O bot imprime recomendações no terminal e salva gráficos de análise técnica para cada ativo monitorado.
+## Interface Web
 
-6. **Execução Contínua e Agendamento**
-   - O monitoramento é feito automaticamente a cada hora (ou outro intervalo configurado), graças ao agendador `schedule`.
-   - O loop principal mantém o bot rodando continuamente, pronto para novas análises.
+### Dashboard Principal
+- **Cards de Ações**
+  - Preço atual
+  - Recomendação (COMPRAR/VENDER/MANTER)
+  - Status do mercado
+  - Última atualização
 
-## Como usar
+### Detalhes Técnicos
+- **Modal Interativo**
+  - Indicadores técnicos detalhados
+  - RSI (Índice de Força Relativa)
+  - ADX (Average Directional Index)
+  - Histórico de preços
+
+### Funcionalidades da Interface
+- **Atualização Automática**
+  - Contador regressivo
+  - Refresh automático dos dados
+  - Cache inteligente
+  - Tratamento de erros
+
+- **Design Responsivo**
+  - Layout adaptativo
+  - Cores intuitivas
+  - Visual moderno
+  - Feedback visual das operações
+
+## Como Usar
 
 1. **Instale as dependências**
    
@@ -50,28 +74,60 @@ O **trade_bot** é um robô de análise técnica para ações da bolsa brasileir
 2. **Configure os parâmetros**
    - Edite o arquivo `config.py` para definir as ações a serem monitoradas e os parâmetros dos indicadores.
 
-3. **Execute o bot**
+3. **Inicie o servidor web**
    ```bash
-   python trade_bot/src/main.py
+   python run_flask.py
    ```
 
-4. **Resultados**
-   - As recomendações aparecerão no terminal.
-   - Os gráficos de análise serão salvos como arquivos PNG na pasta do projeto.
+4. **Acesse a interface**
+   - Abra seu navegador em `http://localhost:5000`
+   - A interface será atualizada automaticamente
+   - Acompanhe as recomendações em tempo real
 
 ## Estrutura do Projeto
 
-- `src/main.py` — Script principal, agendamento e orquestração
-- `src/data_pipeline.py` — Download e processamento dos dados
-- `src/strategy.py` — Lógica de geração de sinais
-- `src/visualizacao.py` — Geração dos gráficos
-- `config.py` — Parâmetros e lista de ativos
-- `README.md` — Este arquivo
+```
+trade_bot/
+├── run_flask.py        # Inicialização do servidor web
+├── pyproject.toml      # Configurações do Poetry
+├── README.md          # Documentação
+├── tests/             # Testes automatizados
+└── trade_bot/         # Código principal
+    ├── config.py      # Configurações gerais
+    └── src/
+        ├── main.py           # Core do bot
+        ├── strategy.py       # Lógica de trading
+        ├── backtest.py       # Sistema de backtesting
+        ├── alert_system.py   # Sistema de alertas
+        └── web/             # Interface web
+            ├── server.py     # Servidor Flask
+            ├── static/       # Arquivos estáticos
+            │   ├── css/
+            │   │   └── styles.css
+            │   └── js/
+            │       └── main.js
+            └── templates/    # Templates HTML
+                └── index.html
+```
 
 ## Observações
-- O bot é apenas para fins educacionais e de backtesting. Não execute operações reais sem validação humana.
-- Para enviar alertas por e-mail, configure as variáveis no `.env` e ajuste o `alert_system.py`.
+
+- O bot é apenas para fins educacionais e de backtesting
+- Não execute operações reais sem validação humana
+- Configure corretamente o fuso horário do servidor
+- Mantenha a página aberta para atualizações em tempo real
+
+## Requisitos Técnicos
+
+- Python 3.6+
+- Flask
+- yfinance
+- pandas
+- Bootstrap 5
+- Navegador moderno com JavaScript habilitado
 
 ---
 
-**Desenvolvido por Paulo Cesar Peixoto**
+## Autor
+
+Paulo Cesar Peixoto

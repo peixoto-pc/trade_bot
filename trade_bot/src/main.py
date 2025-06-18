@@ -1,11 +1,15 @@
 import time
+from trade_bot.src.data_pipeline import baixar_dados, processar_dados
+from trade_bot.src.strategy import gerar_sinais
+from trade_bot.config import ACOES, ADX_LIMITE, RSI_SOBRECOMPRADO, RSI_SOBREVENDIDO, VOLUME_MIN
+from trade_bot.src.visualizacao import plotar_analiseime
 import schedule
 import pandas as pd
 from datetime import datetime
-from data_pipeline import baixar_dados, processar_dados
-from strategy import gerar_sinais
-from config import ACOES, ADX_LIMITE, RSI_SOBRECOMPRADO, RSI_SOBREVENDIDO, VOLUME_MIN
-from visualizacao import plotar_analise
+from .data_pipeline import baixar_dados, processar_dados
+from .strategy import gerar_sinais
+from ..config import ACOES, ADX_LIMITE, RSI_SOBRECOMPRADO, RSI_SOBREVENDIDO, VOLUME_MIN
+from .visualizacao import plotar_analise
 
 def gerar_recomendacao(acao):
     """Gera recomendação com tratamento completo de erros"""
